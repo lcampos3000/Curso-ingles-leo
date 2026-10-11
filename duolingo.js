@@ -32,7 +32,10 @@ Revisões em andamento: ${rev}
 6. Produzir um feedback em português claro. Ofereça conversarmos sobre o feedback em voz, com duração flexível, quando eu quiser. A conversa de feedback acontece DEPOIS da minha prática no Duolingo, não durante ela.
 
 IMPORTANTE SOBRE O FLUXO
-Ao receber a transcrição, faça a análise e permita que eu discuta as correções. Se eu pedir "relatório", "gerar relatório", "finalizar" ou "prompt de retorno", gere o bloco JSON estruturado abaixo. Se eu pedir relatório direto, dispense a conversa de feedback. Não imponha 5, 10 ou 20 minutos fixos. Não exija que eu repita frases corrigidas.
+ETAPA A — RECEBIMENTO DO PROMPT: se eu colar somente este prompt, não faça análise, não inicie aula, não gere relatório e não antecipe feedback. Responda apenas que está aguardando a transcrição.
+ETAPA B — RECEBIMENTO DA TRANSCRIÇÃO: se eu enviar a transcrição (isoladamente ou junto deste prompt), apenas registre o conteúdo como fonte da prática, SEM exibir análise, correções, diagnóstico, resumo avaliativo ou JSON. Pergunte EXATAMENTE: "Recebi sua conversa com o Duolingo! Você prefere 1) conversar sobre a atividade ou 2) gerar o relatório para exportar à plataforma?"
+ETAPA C — ESCOLHA DO ESTUDANTE: somente se eu escolher a opção 1, faça o feedback dialogado em português (por voz ou texto), conversando sobre acertos, dificuldades e alternativas naturais, conforme minhas perguntas; não gere o JSON nessa etapa. Ao final, ofereça a exportação. Se eu escolher a opção 2, gere diretamente o JSON de retorno sem apresentar uma análise separada antes.
+ETAPA D — EXPORTAÇÃO: se depois da conversa de feedback eu disser "gerar relatório", "finalizar" ou "prompt de retorno", produza o JSON estruturado abaixo, usando a transcrição original e as evidências discutidas. Nunca invente falas, áudio, duração nem pontuações. Não imponha tempo rígido, nem exija repetição de frases.
 
 RELATÓRIO PARA DEVOLVER À PLATAFORMA
 Gere um único objeto JSON VÁLIDO entre RELATORIO_INICIO e RELATORIO_FIM, sem crases de bloco de código. Use UTF-8, aspas duplas e nulos reais quando desconhecidos. Não invente conteúdo.
@@ -61,7 +64,7 @@ RELATORIO_INICIO
 RELATORIO_FIM
 
 Confira se a transcrição está integral e se os exemplos corrigidos correspondem ao que foi realmente falado. Se houver incerteza ou erro de transcrição, indique isso na explicação.
-Agora aguarde ou analise a transcrição que eu enviar.`;
+Se ainda não enviei a transcrição, aguarde sem analisar. Quando eu a enviar, faça apenas a pergunta de escolha definida na ETAPA B e espere minha resposta.`;
   }
 
   function duoView(){
@@ -88,7 +91,7 @@ Agora aguarde ou analise a transcrição que eu enviar.`;
       <p class="muted">Importe suas conversas com Lily sem misturá-las com as aulas regulares. A análise acontece no ChatGPT e volta para cá como relatório estruturado.</p>
       <div class="step"><b>1 · Copiar prompt</b><p>Gere o comando de análise e cole no ChatGPT ou Gemini.</p>
       <button onclick="copyDuolingoPrompt()">Copiar prompt da prática</button></div>
-      <div class="step"><b>2 · Colar a conversa</b><p>Cole no chat a transcrição integral da chamada. Leia ou discuta o feedback oralmente, se desejar; depois peça “Gerar relatório de retorno”.</p></div>
+      <div class="step"><b>2 · Colar a conversa</b><p>Cole no chat a transcrição integral da chamada. Eu perguntarei se você prefere conversar sobre a prática ou gerar diretamente o relatório para exportação.</p></div>
       <div class="step"><b>3 · Devolver o relatório</b><p>Cole abaixo o JSON entre RELATORIO_INICIO e RELATORIO_FIM. A plataforma verificará o formato antes de registrar.</p></div>
       <h3>Importar resultado do Duolingo</h3>
       <textarea id="duoReport" style="min-height:220px" placeholder="RELATORIO_INICIO&#10;{ &quot;tipo&quot;: &quot;pratica_externa&quot;, ... }&#10;RELATORIO_FIM"></textarea>
