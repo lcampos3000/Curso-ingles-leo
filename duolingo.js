@@ -144,7 +144,7 @@ Agora aguarde ou analise a transcrição que eu enviar.`;
     }
     for(const v of r.vocabulario){
       if(v&&typeof v.term==="string"&&v.term.trim()){
-        next.state.vocab.push({term:v.term,meaning:v.meaning||"",example:v.example||"",mastery:Number.isFinite(Number(v.mastery))&&v.mastery!==null?pct(v.mastery):0,date,source:"Duolingo",practiceId:item.id});
+        next.state.vocab.push({term:v.term,meaning:v.meaning||"",example:v.example||"",mastery:Number.isFinite(Number(v.mastery))&&v.mastery!==null?pct(v.mastery):null,date,source:"Duolingo",practiceId:item.id});
       }
     }
     next.state.nextReview=[...new Set([...next.state.nextReview,...r.proxima_revisao.filter(x=>typeof x==="string"&&x.trim())])].slice(-80);
